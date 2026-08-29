@@ -2,6 +2,12 @@ import Link from "next/link";
 
 type IconProps = { name: "bell" | "search" | "arrow" | "chart" | "clock" | "file" | "star"; size?: number };
 
+/**
+ * Renders a named inline SVG icon.
+ *
+ * @param name - The icon to render
+ * @param size - The icon dimensions in pixels
+ */
 function Icon({ name, size = 22 }: IconProps) {
   const common = { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true };
   const shapes = {
@@ -26,6 +32,11 @@ const courses = [
   { title: "TypeScript Deep Dive", description: "Go beyond the basics and write safer, more expressive code.", level: "Intermediate", duration: "14h 36m", modules: "10 modules", mark: "TS", tone: "typescript" },
 ];
 
+/**
+ * Renders a course card with its branding, description, and learning metadata.
+ *
+ * @param course - The course details displayed in the card.
+ */
 function CourseCard({ course }: { course: (typeof courses)[number] }) {
   return <article className="home-course-card">
     <div className={`course-mark ${course.tone}`}>{course.mark === "docker" ? <span className="docker-mark"><i /><i /><i /><b /></span> : course.mark}</div>
@@ -35,6 +46,9 @@ function CourseCard({ course }: { course: (typeof courses)[number] }) {
   </article>;
 }
 
+/**
+ * Renders the Vertex learning platform home page.
+ */
 export default function Home() {
   return <main className="home-page">
     <header className="home-header">
