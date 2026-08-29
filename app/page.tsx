@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
 
 type IconProps = { name: "bell" | "search" | "arrow" | "chart" | "clock" | "file" | "star"; size?: number };
 
@@ -40,7 +41,7 @@ export default function Home() {
     <header className="home-header">
       <Link className="home-brand" href="/"><VertexMark /><span>Vertex</span></Link>
       <nav className="home-nav" aria-label="Main navigation"><a className="active" href="#courses">Courses</a><a href="#learning">My Learning</a></nav>
-      <div className="home-actions"><button className="icon-button" aria-label="Notifications"><Icon name="bell" size={24} /></button><button className="profile-button" aria-label="Open profile"><span /></button></div>
+      <div className="home-actions"><button className="icon-button" aria-label="Notifications"><Icon name="bell" size={24} /></button><Show when="signed-out"><div className="auth-actions"><SignInButton mode="modal"><button className="auth-button auth-button-ghost">Sign in</button></SignInButton><SignUpButton mode="modal"><button className="auth-button auth-button-primary">Sign up</button></SignUpButton></div></Show><Show when="signed-in"><UserButton /></Show></div>
     </header>
     <section className="home-hero" id="learning">
       <div className="hero-badge">INTELLIGENT LEARNING</div>
