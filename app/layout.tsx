@@ -1,3 +1,4 @@
+import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next'
 import './globals.css'
 
@@ -16,7 +17,9 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         className='min-h-full flex flex-col'
         suppressHydrationWarning
       >
-        {children}
+        <ClerkProvider>
+          {children}
+        </ClerkProvider>
       </body>
     </html>
   )
