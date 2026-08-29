@@ -6,7 +6,38 @@
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
     "**/CVS": true,
-    "**/.ruby-lsp": true
+    "**/.ruby-lsp": true,
+    ".claude": true,
+    ".next": true,
+    ".vscode": true,
+    "node_modules": true,
+    "public": true,
+    ".gitignore": true,
+    "bun.lock": true,
+    "eslint.config.mjs": true,
+    "next-env.d.ts": true,
+    "next.config.ts": true,
+    "package.json": true,
+    "postcss.config.mjs": true,
+    "README.md": true,
+    "skills-lock.json": true,
+    "tsconfig.json": true
   },
-  "hide-files.files": []
+  "hide-files.files": [
+    ".claude",
+    ".next",
+    ".vscode",
+    "node_modules",
+    "public",
+    ".gitignore",
+    "bun.lock",
+    "eslint.config.mjs",
+    "next-env.d.ts",
+    "next.config.ts",
+    "package.json",
+    "postcss.config.mjs",
+    "README.md",
+    "skills-lock.json",
+    "tsconfig.json"
+  ]
 }
