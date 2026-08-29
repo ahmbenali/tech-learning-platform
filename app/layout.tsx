@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   description: 'Vertex learning platform design system.',
 }
 
+/**
+ * Renders the root HTML structure for the application.
+ *
+ * @param children - The page content rendered inside the document body
+ */
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html
