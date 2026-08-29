@@ -10,9 +10,14 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html
       lang='en'
-      className='h-full antialiased'
+      className='h-full antialiased no-touch'
     >
-      <body className='min-h-full flex flex-col'>{children}</body>
+      <body
+        className='min-h-full flex flex-col'
+        suppressHydrationWarning
+      >
+        {children}
+      </body>
     </html>
   )
 }
