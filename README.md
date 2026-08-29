@@ -1,5 +1,13 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Vertex workspaces
+
+Run the Next.js web app with `bun run dev` and open [http://localhost:3000](http://localhost:3000).
+
+Run the standalone Sanity Studio in a second terminal with `bun run studio`. Set its public configuration in `studio/.env` using `studio/.env.example`, then open [http://localhost:3333](http://localhost:3333). The Studio is intentionally separate from the Next.js app; `/studio` is not an application route.
+
+The web app's environment-variable names are documented in `.env.example`. Do not commit `.env` files or tokens.
+
 ## Getting Started
 
 First, run the development server:
