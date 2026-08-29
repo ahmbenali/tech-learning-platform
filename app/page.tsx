@@ -42,7 +42,7 @@ export default function Home() {
       <nav className="home-nav" aria-label="Main navigation"><a className="active" href="#courses">Courses</a><a href="#learning">My Learning</a></nav>
       <div className="home-actions"><button className="icon-button" aria-label="Notifications"><Icon name="bell" size={24} /></button><button className="profile-button" aria-label="Open profile"><span /></button></div>
     </header>
-    <section className="home-hero">
+    <section className="home-hero" id="learning">
       <div className="hero-badge">INTELLIGENT LEARNING</div>
       <h1>Search your learning<br />in plain English.</h1>
       <p>Vertex understands what you want to learn and<br className="desktop-break" /> finds the exact lessons across all your courses.</p>
