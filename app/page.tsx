@@ -2,6 +2,7 @@ import Link from "next/link"
 
 import { getCourseCatalog } from "@/sanity/lib/data"
 import { CourseCard } from "./components/CourseCard"
+import { ExploreButton } from "./components/ExploreButton"
 import { Icon } from "./components/Icon"
 import { SiteHeader } from "./components/SiteHeader"
 
@@ -13,7 +14,7 @@ export default async function Home() {
 
   return (
     <main className="home-page">
-      <SiteHeader activeNav="courses" />
+      <SiteHeader />
       <section className="home-hero" id="learning">
         <div className="hero-badge">INTELLIGENT LEARNING</div>
         <h1>
@@ -26,9 +27,7 @@ export default async function Home() {
           <br className="desktop-break" /> finds the exact lessons across all your
           courses.
         </p>
-        <a className="explore-button" href="#courses">
-          Explore Courses <Icon name="arrow" size={24} />
-        </a>
+        <ExploreButton />
         <label className="home-search" htmlFor="learning-search">
           <Icon name="search" size={31} />
           <input

@@ -11,6 +11,7 @@ import {
   formatStudentCount,
 } from "@/sanity/lib/format"
 import { urlFor } from "@/sanity/lib/image"
+import { CourseActions, LessonLink, StickyBar } from "./CourseClientInteractions"
 
 export const revalidate = 60
 
@@ -52,11 +53,11 @@ export default async function CoursePage({
 
   return (
     <main className="home-page course-page">
-      <SiteHeader activeNav="courses" />
+      <SiteHeader />
 
       <nav className="course-crumbs" aria-label="Breadcrumb">
-        <Link href="/#courses">All Courses</Link>
-        <span aria-hidden="true">/</span>
+        <Link href="/courses">All Courses</Link>
+        <span aria-hidden="true">&gt;</span>
         <span>{course.title}</span>
       </nav>
 
@@ -92,16 +93,11 @@ export default async function CoursePage({
               {formatStudentCount(course.studentCount)}
             </li>
           </ul>
-          <div className="course-actions">
-            <Link className="primary-action" href={continueHref}>
-              Continue Learning
-              <Icon name="arrow" size={20} />
-            </Link>
-            <button className="secondary-action" type="button">
-              <Icon name="bookmark" size={18} />
-              Bookmark
-            </button>
-          </div>
+          <CourseActions
+            courseSlug={slug}
+            courseTitle={course.title}
+            continueHref={continueHref}
+          />
         </div>
       </section>
 
@@ -154,21 +150,16 @@ export default async function CoursePage({
                   <ol className="lesson-list">
                     {module.lessons.map((lesson) => (
                       <li key={lesson._id}>
-                        <Link
-                          className="lesson-row"
-                          href={`/lessons/${lesson.slug}`}
-                        >
-                          <span className="lesson-index">
-                            {module.index}.{lesson.index}
-                          </span>
-                          <span className="lesson-title">{lesson.title}</span>
-                          {lesson.freePreview ? (
-                            <span className="free-badge">Free preview</span>
-                          ) : null}
-                          <span className="lesson-duration">
-                            {formatDuration(lesson.durationSeconds, "short")}
-                          </span>
-                        </Link>
+                        <LessonLink
+                          courseSlug={slug}
+                          lessonSlug={lesson.slug}
+                          moduleIndex={module.index}
+                          lessonIndex={lesson.index}
+                          lessonTitle={lesson.title}
+                          lessonHref={`/lessons/${lesson.slug}`}
+                          durationFormatted={formatDuration(lesson.durationSeconds, "short")}
+                          isFreePreview={lesson.freePreview}
+                        />
                       </li>
                     ))}
                   </ol>
@@ -179,20 +170,12 @@ export default async function CoursePage({
         </ol>
       </section>
 
-      <div className="course-sticky-bar" role="complementary">
-        <div className="sticky-progress">
-          <div className="progress-track-lg" aria-hidden="true">
-            <span style={{ width: "40%" }} />
-          </div>
-          <span className="progress-label">
-            <strong>40%</strong> complete
-          </span>
-        </div>
-        <Link className="primary-action" href={continueHref}>
-          Continue Learning
-          <Icon name="arrow" size={20} />
-        </Link>
-      </div>
+      <StickyBar
+        courseSlug={slug}
+        courseTitle={course.title}
+        continueHref={continueHref}
+        progressPercent={40}
+      />
     </main>
   )
 }

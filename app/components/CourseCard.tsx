@@ -1,4 +1,7 @@
+"use client"
+
 import Link from "next/link"
+import posthog from "posthog-js"
 
 import type { CourseCatalogItem } from "@/sanity/lib/data"
 import { formatLevel } from "@/sanity/lib/format"
@@ -35,7 +38,16 @@ export function CourseCard({ course }: { course: CourseCatalogItem }) {
   const { mark, tone } = getMarkInfo(course.title)
 
   return (
-    <Link href={`/courses/${course.slug}`}>
+    <Link
+      href={`/courses/${course.slug}`}
+      onClick={() =>
+        posthog.capture("course_card_clicked", {
+          course_slug: course.slug,
+          course_title: course.title,
+          course_level: course.level,
+        })
+      }
+    >
       <article className="home-course-card">
         <div className={`course-mark ${tone}`}>
           {mark === "docker" ? (

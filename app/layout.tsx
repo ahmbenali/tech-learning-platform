@@ -1,6 +1,7 @@
 import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next'
 import './globals.css'
+import { PostHogUserIdentifier } from './components/PostHogUserIdentifier'
 
 export const metadata: Metadata = {
   title: 'Vertex Design System',
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         suppressHydrationWarning
       >
         <ClerkProvider>
+          <PostHogUserIdentifier />
           {children}
         </ClerkProvider>
       </body>

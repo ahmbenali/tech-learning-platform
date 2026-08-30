@@ -107,6 +107,41 @@ export const LESSON_BY_SLUG_QUERY = defineQuery(/* groq */ `
   }
 `)
 
+export const LESSON_PAGE_QUERY = defineQuery(/* groq */ `
+  *[_type == "lesson" && slug.current == $slug][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    videoUrl,
+    thumbnail {${imageFields}},
+    "durationSeconds": coalesce(durationSeconds, duration),
+    freePreview,
+    studentCount,
+    notes,
+    keyPoints,
+    proTip,
+    resources[]{_key, type, title, description, url},
+    "course": *[_type == "course" && references(^._id)][0]{
+      _id,
+      title,
+      "slug": slug.current,
+      "moduleCount": count(modules),
+      "modules": modules[]{
+        _key,
+        title,
+        summary,
+        "lessonIds": lessons[]._ref,
+        "lessons": lessons[]->{
+          _id,
+          title,
+          "slug": slug.current,
+          "durationSeconds": coalesce(durationSeconds, duration)
+        }
+      }
+    }
+  }
+`)
+
 export const INSTRUCTOR_BY_SLUG_QUERY = defineQuery(/* groq */ `
   *[_type == "instructor" && slug.current == $slug][0] {
     ${instructorFields},
