@@ -1180,6 +1180,56 @@ select {
 .course-mark.docker {
   background: transparent;
 }
+.course-mark.react {
+  background: #0e2233;
+  color: #61dafb;
+  font-size: 37px;
+  font-weight: 700;
+}
+.course-mark.python {
+  background: #1a2e44;
+  color: #ffd43b;
+  font-size: 37px;
+  font-weight: 700;
+}
+.course-mark.ai {
+  background: #1d1033;
+  color: #a78bfa;
+  font-size: 34px;
+  font-weight: 700;
+}
+.course-mark.postgres {
+  background: #0f1e36;
+  color: #7fbbde;
+  font-size: 29px;
+  font-weight: 700;
+}
+.course-mark.devops {
+  background: #0c1c0c;
+  color: #86efac;
+  font-size: 29px;
+  font-weight: 700;
+}
+.course-mark.security {
+  background: #1f0f06;
+  color: #fb923c;
+  font-size: 29px;
+  font-weight: 700;
+}
+.course-mark.default {
+  background: #1e1e1e;
+  color: #9ca3af;
+  font-size: 34px;
+  font-weight: 700;
+}
+.course-grid a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.catalog-section {
+  padding-top: 48px;
+}
 .docker-mark {
   position: relative;
   width: 61px;
