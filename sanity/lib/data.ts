@@ -11,6 +11,7 @@ import {
   INSTRUCTOR_BY_SLUG_QUERY,
   INSTRUCTOR_SLUGS_QUERY,
   LESSON_BY_SLUG_QUERY,
+  LESSON_PAGE_QUERY,
   LESSON_SLUGS_QUERY,
 } from './queries'
 
@@ -153,6 +154,43 @@ type LessonDetailRaw = Omit<LessonDetail, 'course' | 'module'> & {
   } | null
 }
 
+export type ModuleSiblingLesson = {
+  _id: string
+  title: string
+  slug: string
+  durationSeconds: number
+}
+
+export type LessonPageData = {
+  lesson: Omit<LessonDetail, 'course' | 'module'>
+  courseId: string
+  courseTitle: string
+  courseSlug: string
+  moduleIndex: number
+  totalModules: number
+  moduleTitle: string
+  lessonIndexInModule: number
+  moduleLessons: ModuleSiblingLesson[]
+  prevLesson: ModuleSiblingLesson | null
+  nextLesson: ModuleSiblingLesson | null
+}
+
+type LessonPageRaw = Omit<LessonDetail, 'course' | 'module'> & {
+  course: {
+    _id: string
+    title: string
+    slug: string
+    moduleCount: number
+    modules: Array<{
+      _key: string
+      title: string
+      summary: string
+      lessonIds: string[]
+      lessons: ModuleSiblingLesson[]
+    }>
+  } | null
+}
+
 export const getCourseCatalog = cache(async (): Promise<CourseCatalogItem[]> =>
   sanityFetch<CourseCatalogItem[]>(COURSE_CATALOG_QUERY),
 )
@@ -209,6 +247,37 @@ export const getLessonBySlug = cache(async (slug: string): Promise<LessonDetail 
           lessonIndex: lessonIndex + 1,
         }
       : null,
+  }
+})
+
+export const getLessonPage = cache(async (slug: string): Promise<LessonPageData | null> => {
+  const raw = await sanityFetch<LessonPageRaw | null>(LESSON_PAGE_QUERY, {params: {slug}})
+  if (!raw || !raw.course) return null
+
+  const {course, ...lessonFields} = raw
+
+  const moduleIndex = course.modules.findIndex((m) => m.lessonIds.includes(raw._id))
+  if (moduleIndex < 0) return null
+
+  const parentModule = course.modules[moduleIndex]
+  const lessonIndexInModule = parentModule.lessonIds.indexOf(raw._id)
+  const moduleLessons = parentModule.lessons
+  const prevLesson = lessonIndexInModule > 0 ? moduleLessons[lessonIndexInModule - 1] : null
+  const nextLesson =
+    lessonIndexInModule < moduleLessons.length - 1 ? moduleLessons[lessonIndexInModule + 1] : null
+
+  return {
+    lesson: lessonFields,
+    courseId: course._id,
+    courseTitle: course.title,
+    courseSlug: course.slug,
+    moduleIndex: moduleIndex + 1,
+    totalModules: course.moduleCount,
+    moduleTitle: parentModule.title,
+    lessonIndexInModule: lessonIndexInModule + 1,
+    moduleLessons,
+    prevLesson,
+    nextLesson,
   }
 })
 

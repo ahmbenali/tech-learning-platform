@@ -1,75 +1,20 @@
+import Link from "next/link"
+
+import { getCourseCatalog } from "@/sanity/lib/data"
+import { CourseCard } from "./components/CourseCard"
+import { ExploreButton } from "./components/ExploreButton"
 import { Icon } from "./components/Icon"
 import { SiteHeader } from "./components/SiteHeader"
 
-const courses = [
-  {
-    title: "Next.js for Production",
-    description: "Build scalable, high-performance web applications with Next.js.",
-    level: "Intermediate",
-    duration: "18h 24m",
-    modules: "12 modules",
-    mark: "N",
-    tone: "next",
-  },
-  {
-    title: "Docker Essentials",
-    description: "Containerize applications and streamline your development workflow.",
-    level: "Beginner",
-    duration: "10h 12m",
-    modules: "8 modules",
-    mark: "docker",
-    tone: "docker",
-  },
-  {
-    title: "TypeScript Deep Dive",
-    description: "Go beyond the basics and write safer, more expressive code.",
-    level: "Intermediate",
-    duration: "14h 36m",
-    modules: "10 modules",
-    mark: "TS",
-    tone: "typescript",
-  },
-]
+export const revalidate = 60
 
-function CourseCard({ course }: { course: (typeof courses)[number] }) {
-  return (
-    <article className="home-course-card">
-      <div className={`course-mark ${course.tone}`}>
-        {course.mark === "docker" ? (
-          <span className="docker-mark">
-            <i />
-            <i />
-            <i />
-            <b />
-          </span>
-        ) : (
-          course.mark
-        )}
-      </div>
-      <h3>{course.title}</h3>
-      <p>{course.description}</p>
-      <div className="course-meta">
-        <span>
-          <Icon name="chart" size={17} />
-          {course.level}
-        </span>
-        <span>
-          <Icon name="clock" size={17} />
-          {course.duration}
-        </span>
-        <span>
-          <Icon name="file" size={17} />
-          {course.modules}
-        </span>
-      </div>
-    </article>
-  )
-}
+export default async function Home() {
+  const courses = await getCourseCatalog()
+  const featured = courses.slice(0, 3)
 
-export default function Home() {
   return (
     <main className="home-page">
-      <SiteHeader activeNav="courses" />
+      <SiteHeader />
       <section className="home-hero" id="learning">
         <div className="hero-badge">INTELLIGENT LEARNING</div>
         <h1>
@@ -82,9 +27,7 @@ export default function Home() {
           <br className="desktop-break" /> finds the exact lessons across all your
           courses.
         </p>
-        <a className="explore-button" href="#courses">
-          Explore Courses <Icon name="arrow" size={24} />
-        </a>
+        <ExploreButton />
         <label className="home-search" htmlFor="learning-search">
           <Icon name="search" size={31} />
           <input
@@ -97,13 +40,13 @@ export default function Home() {
       <section className="courses-section" id="courses">
         <div className="section-top">
           <h2>All Courses</h2>
-          <a href="#courses">
+          <Link href="/courses">
             View all courses <Icon name="arrow" size={20} />
-          </a>
+          </Link>
         </div>
         <div className="course-grid">
-          {courses.map((course) => (
-            <CourseCard key={course.title} course={course} />
+          {featured.map((course) => (
+            <CourseCard key={course._id} course={course} />
           ))}
         </div>
       </section>
