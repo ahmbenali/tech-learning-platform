@@ -44,3 +44,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# claude code skills (downloaded tooling, not source)
+.claude/skills/
+
+# generated reports
+posthog-self-driving-report.md
